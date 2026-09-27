@@ -1,0 +1,29 @@
+{
+  "at": "2026-09-25T08:34:31.088Z",
+  "passed": 23,
+  "checks": [
+    "Public listings loaded",
+    "International rental filter",
+    "Domestic property type filter",
+    "Cross-origin mutation blocked",
+    "Unauthenticated workspace denied",
+    "Sale sees assigned projects but not contracts/subscriptions",
+    "Company invitation reserves seat",
+    "Invited Sale activates with password",
+    "Company assigns entitled project to activated Sale",
+    "Seat revocation removes project access",
+    "Other company cannot read listings or leads",
+    "Sale creates scoped draft",
+    "Sale cannot self-publish",
+    "Actual image upload and processing",
+    "Sale submits for approval",
+    "Administrator approves",
+    "Approved listing publicly visible",
+    "Approved uploaded image served publicly",
+    "Contact saved to assigned Sale",
+    "Contact isolated from other organization",
+    "Hidden listing removed from public view",
+    "Hidden image no longer public",
+    "Logout invalidates session"
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "at": "2026-09-27T12:40:36.219Z",
+  "screens": [
+    {
+      "width": 1440,
+      "tab": "Doanh nghiệp",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "tab": "Dự án",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "tab": "Hợp đồng & combo",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "tab": "Nội dung",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "tab": "Doanh nghiệp",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "tab": "Dự án",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "tab": "Hợp đồng & combo",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "tab": "Nội dung",
+      "overflow": false
+    },
+    {
+      "width": 360,
+      "tab": "Doanh nghiệp",
+      "overflow": false
+    },
+    {
+      "width": 360,
+      "tab": "Dự án",
+      "overflow": false
+    },
+    {
+      "width": 360,
+      "tab": "Hợp đồng & combo",
+      "overflow": false
+    },
+    {
+      "width": 360,
+      "tab": "Nội dung",
+      "overflow": false
+    }
+  ],
+  "workflow": [
+    "Mobile admin link",
+    "Create company form",
+    "Activate company with confirmation",
+    "Suspend company",
+    "Save article draft",
+    "Publish article",
+    "Hide and load editor"
+  ],
+  "errors": []
+}

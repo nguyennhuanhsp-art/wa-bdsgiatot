@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import path from 'node:path';
+const root=process.cwd(),file=path.join(root,'package.json');
+const p=JSON.parse(fs.readFileSync(file,'utf8'));
+p.workspaces=[...new Set([...(p.workspaces||[]),'apps/web','apps/api'])];
+p.scripts={...p.scripts,'dev':'concurrently -k -n API,WEB "npm run dev -w @bdsgiatot/api" "npm run dev -w @bdsgiatot/web"','build':'npm run build -w @bdsgiatot/api && npm run build -w @bdsgiatot/web','typecheck':'npm run typecheck -w @bdsgiatot/api && npm run typecheck -w @bdsgiatot/web','start':'concurrently -k -n API,WEB "npm run start -w @bdsgiatot/api" "npm run start -w @bdsgiatot/web"'};
+p.devDependencies={...p.devDependencies,concurrently:'^9.2.1'};
+fs.writeFileSync(file,JSON.stringify(p,null,2)+'\n');
+const ignore=path.join(root,'.gitignore');const extra=['.local/','.npm-cache/','apps/api/dist/','apps/web/.next/','*.tsbuildinfo'];
+const old=fs.readFileSync(ignore,'utf8');fs.writeFileSync(ignore,old+'\n'+extra.filter(x=>!old.includes(x)).join('\n')+'\n');
+console.log('App workspaces configured; original SQL scripts preserved.');

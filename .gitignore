@@ -1,0 +1,15 @@
+node_modules/
+.env
+.env.*
+!.env.example
+*.log
+coverage/
+.next/
+dist/
+tests/native-result.json
+
+.local/
+.npm-cache/
+apps/api/dist/
+apps/web/.next/
+*.tsbuildinfo

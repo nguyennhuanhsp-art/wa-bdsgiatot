@@ -1,0 +1,173 @@
+{
+  "errors": [],
+  "results": [
+    {
+      "width": 1440,
+      "route": "/",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 1440,
+      "route": "/mua-ban",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 1440,
+      "route": "/cho-thue?market=international",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 1440,
+      "route": "/tin/1",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 1440,
+      "route": "/du-an/the-garden-riverside",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 1440,
+      "route": "/tin-tuc",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 1440,
+      "route": "/danh-ba",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 1440,
+      "route": "/dang-nhap",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 390,
+      "route": "/",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 390,
+      "route": "/mua-ban",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 390,
+      "route": "/cho-thue?market=international",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 390,
+      "route": "/tin/1",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 390,
+      "route": "/du-an/the-garden-riverside",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 390,
+      "route": "/tin-tuc",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 390,
+      "route": "/danh-ba",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 390,
+      "route": "/dang-nhap",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 360,
+      "route": "/",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 360,
+      "route": "/mua-ban",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 360,
+      "route": "/cho-thue?market=international",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 360,
+      "route": "/tin/1",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 360,
+      "route": "/du-an/the-garden-riverside",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 360,
+      "route": "/tin-tuc",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 360,
+      "route": "/danh-ba",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    },
+    {
+      "width": 360,
+      "route": "/dang-nhap",
+      "status": 200,
+      "overflow": false,
+      "broken": 0
+    }
+  ]
+}

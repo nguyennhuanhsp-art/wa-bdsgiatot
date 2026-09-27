@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';
+const base='http://127.0.0.1:3001/api/v1',origin='http://127.0.0.1:3000';const checks=[];
+async function request(path,body,cookie,expected=200){const r=await fetch(`${base}/${path}`,{method:body===undefined?'GET':'POST',headers:{...(body!==undefined?{'Content-Type':'application/json',Origin:origin}:{}),...(cookie?{Cookie:cookie}:{})},body:body===undefined?undefined:JSON.stringify(body)});const d=await r.json();assert.equal(r.status,expected,`${path}: ${JSON.stringify(d)}`);return {data:d,cookie:r.headers.get('set-cookie')?.split(';')[0]};}
+const login=async role=>(await request('auth/demo',{role},null,201)).cookie;
+function ok(name){checks.push(name);console.log('PASS',name)}
+const health=(await request('health')).data;assert.equal(health.demo,true);
+const all=(await request('listings')).data;assert.ok(all.total>=12);ok('Public listings loaded');
+const international=(await request('listings?market=international&transaction=rent')).data;assert.equal(international.total,2);ok('International rental filter');
+assert.equal((await request('listings?market=domestic&type=shophouse')).data.total,2);ok('Domestic property type filter');
+const blocked=await fetch(`${base}/auth/demo`,{method:'POST',headers:{'Content-Type':'application/json',Origin:'https://untrusted.example'},body:'{"role":"admin"}'});assert.equal(blocked.status,403);ok('Cross-origin mutation blocked');
+await request('workspace',undefined,null,401);ok('Unauthenticated workspace denied');
+const sale=await login('sale'),company=await login('company'),admin=await login('admin'),other=await login('other');
+const work=(await request('workspace',undefined,sale)).data;assert.equal(work.assignments.length,6);assert.equal(work.subscriptions.length,0);ok('Sale sees assigned projects but not contracts/subscriptions');
+const companyWork=(await request('workspace',undefined,company)).data;const subscription=companyWork.subscriptions.find(s=>s.status==='active');const email=`invited-${Date.now()}@example.test`;
+const invite=(await request('workspace/invite',{subscription_id:subscription.id,email,name:'Sale kiểm thử lời mời'},company,201)).data;assert.ok(invite.activation_url);ok('Company invitation reserves seat');
+const token=new URL(invite.activation_url,origin).searchParams.get('token');const activated=await request('auth/activate',{token,password:'Local-test-only-2026!'},null,201);ok('Invited Sale activates with password');
+const updated=(await request('workspace',undefined,company)).data;const member=updated.members.find(m=>m.email===email),seat=updated.seats.find(s=>s.member_id===member.id&&s.status==='active'),grant=updated.grants.find(g=>g.status==='active');assert.ok(seat);
+await request('workspace/assign',{seat_id:seat.id,grant_id:grant.id},company,201);assert.equal((await request('workspace',undefined,activated.cookie)).data.assignments.length,1);ok('Company assigns entitled project to activated Sale');
+await request('workspace/revoke',{seat_id:seat.id},company,201);assert.equal((await request('workspace',undefined,activated.cookie)).data.assignments.length,0);ok('Seat revocation removes project access');
+const outside=(await request('workspace',undefined,other)).data;assert.equal(outside.listings.length,0);assert.equal(outside.leads.length,0);ok('Other company cannot read listings or leads');
+const a=work.assignments.find(x=>x.project_name==='The Garden Riverside');
+const created=(await request('workspace/listings',{assignment_id:a.id,title:'Kiểm thử biệt thự sân vườn có ảnh',description:'Tin dùng để kiểm thử luồng tạo ảnh, gửi duyệt và phê duyệt trong môi trường nội bộ.',property_type_code:'villa',transaction_type:'sale',price_amount:12000000000,area_m2:250,currency_code:'VND',bedrooms:3},sale,201)).data;ok('Sale creates scoped draft');
+let r=await fetch(`${base}/workspace/listings/${created.id}/status`,{method:'POST',headers:{'Content-Type':'application/json',Origin:origin,Cookie:sale},body:'{"status":"published"}'});assert.ok(r.status>=400);ok('Sale cannot self-publish');
+const f=new FormData();f.set('file',new Blob([fs.readFileSync('apps/web/public/images/home-1.webp')],{type:'image/webp'}),'sample.webp');r=await fetch(`${base}/workspace/listings/${created.id}/image`,{method:'POST',headers:{Origin:origin,Cookie:sale},body:f});assert.equal(r.status,201,await r.text());ok('Actual image upload and processing');
+await request(`workspace/listings/${created.id}/status`,{status:'pending'},sale,201);ok('Sale submits for approval');
+await request(`workspace/listings/${created.id}/status`,{status:'published'},admin,201);ok('Administrator approves');
+const pub=(await request(`listings/${created.public_code}`)).data;assert.ok(pub.images[0].public_url.startsWith('/api/v1/media'));ok('Approved listing publicly visible');
+const image=await fetch(`http://127.0.0.1:3001${pub.images[0].public_url}`);assert.equal(image.status,200);assert.equal(image.headers.get('content-type'),'image/webp');ok('Approved uploaded image served publicly');
+await request('contact',{listing_id:created.id,name:'Khách kiểm thử',contact:'test@example.test',message:'Yêu cầu thử nghiệm nội bộ',consent:true},null,201);
+const leads=(await request('workspace',undefined,sale)).data.leads;assert.ok(leads.some(x=>x.listing_id===created.id));ok('Contact saved to assigned Sale');
+assert.equal((await request('workspace',undefined,other)).data.leads.length,0);ok('Contact isolated from other organization');
+await request(`workspace/listings/${created.id}/status`,{status:'hidden'},sale,201);await request(`listings/${created.public_code}`,undefined,null,404);ok('Hidden listing removed from public view');
+assert.equal((await fetch(`http://127.0.0.1:3001${pub.images[0].public_url}`)).status,404);ok('Hidden image no longer public');
+await request(`workspace/listings/${created.id}/status`,{status:'closed'},sale,201);
+await request('auth/logout',{},sale,201);await request('workspace',undefined,sale,401);ok('Logout invalidates session');
+fs.mkdirSync('tests',{recursive:true});fs.writeFileSync('tests/app-result.json',JSON.stringify({at:new Date().toISOString(),passed:checks.length,checks},null,2));console.log(`${checks.length} checks passed.`);

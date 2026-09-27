@@ -1,0 +1,15 @@
+{
+  "passed": 9,
+  "checks": [
+    "Registration notice",
+    "Demo Sale login",
+    "Create draft on mobile",
+    "Edit draft",
+    "Sale mobile no overflow",
+    "Company login",
+    "Company mobile no overflow",
+    "Admin login",
+    "Review listing images before approval"
+  ],
+  "errors": []
+}

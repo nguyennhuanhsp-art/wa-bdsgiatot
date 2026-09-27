@@ -1,0 +1,30 @@
+{
+  "at": "2026-09-27T12:39:17.195Z",
+  "passed": 17,
+  "checks": [
+    "Admin endpoints reject anonymous and non-admin users",
+    "New company remains pending and private",
+    "Admin explicitly activates company",
+    "Admin creates project with approved property type",
+    "Invited company manager activates account",
+    "Non-PDF contract rejected",
+    "Signed PDF stored as private contract draft",
+    "Combo blocked before contract activation",
+    "Private PDF restricted to admin and correct company manager",
+    "Active signed contract permits scoped combo",
+    "Company manager sees only own combo and project grant",
+    "New organization can invite Sale and assign newly created project",
+    "Suspended combo immediately removes live posting rights",
+    "Suspended contract immediately removes live posting rights",
+    "Draft article private, published article public",
+    "Published article cannot be edited until hidden",
+    "Hiding article removes public content"
+  ],
+  "fixture": {
+    "org": "42357dd8-6d6f-49db-bce4-964019324f2d",
+    "project": "25625ea9-7646-4269-b0d6-e39bf43a6ea8",
+    "contract": "8cc70b27-e131-4c64-b643-4bb7db5bacf7",
+    "subscription": "fd11233a-03e9-4947-8278-032091e21c5f",
+    "article": "e5ca979a-d726-40be-bfd5-36608a4d8280"
+  }
+}

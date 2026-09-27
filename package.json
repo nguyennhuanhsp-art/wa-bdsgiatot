@@ -1,0 +1,29 @@
+{
+  "name": "bdsgiatot-database-blueprint",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:sql": "node tests/sql.test.mjs",
+    "db:migrate": "node --env-file=.env scripts/migrate.mjs",
+    "db:bootstrap": "node --env-file=.env scripts/bootstrap-admin.mjs",
+    "db:roles": "node --env-file=.env scripts/provision-logins.mjs",
+    "dev": "concurrently -k -n API,WEB \"npm run dev -w @bdsgiatot/api\" \"npm run dev -w @bdsgiatot/web\"",
+    "build": "npm run build -w @bdsgiatot/api && npm run build -w @bdsgiatot/web",
+    "typecheck": "npm run typecheck -w @bdsgiatot/api && npm run typecheck -w @bdsgiatot/web",
+    "start": "concurrently -k -n API,WEB \"npm run start -w @bdsgiatot/api\" \"npm run start -w @bdsgiatot/web\""
+  },
+  "dependencies": {
+    "pg": "8.16.3",
+    "argon2": "0.44.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
+    "@electric-sql/pglite-postgis": "0.2.8",
+    "concurrently": "^9.2.1"
+  },
+  "workspaces": [
+    "apps/web",
+    "apps/api"
+  ]
+}

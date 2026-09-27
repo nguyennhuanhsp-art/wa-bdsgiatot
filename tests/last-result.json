@@ -1,0 +1,157 @@
+{
+  "testedAt": "2026-09-25T02:01:05.249Z",
+  "engine": "PGlite with real PostGIS and pg_trgm; unmodified migrations",
+  "server": "PostgreSQL 18.3 (PGlite 0.5.8) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 3.1.74 (1092ec30a3fb1d46b1782ff1b4db5094d3d06ae5), 32-bit",
+  "postgis": "3.6 USE_GEOS=1 USE_PROJ=1 USE_STATS=1",
+  "tableCount": 37,
+  "tests": [
+    {
+      "name": "PostGIS and pg_trgm loaded with unmodified migrations",
+      "status": "passed"
+    },
+    {
+      "name": "Company admin allocates one seat and project assignment",
+      "status": "passed"
+    },
+    {
+      "name": "Seat allocation is idempotent",
+      "status": "passed"
+    },
+    {
+      "name": "Second seat exceeds quota",
+      "status": "passed"
+    },
+    {
+      "name": "Other company cannot allocate a seat",
+      "status": "passed"
+    },
+    {
+      "name": "Assigned Sale creates draft listings",
+      "status": "passed"
+    },
+    {
+      "name": "Drafts are not public",
+      "status": "passed"
+    },
+    {
+      "name": "Other company cannot read tenant listings",
+      "status": "passed"
+    },
+    {
+      "name": "Other company cannot read tenant contracts",
+      "status": "passed"
+    },
+    {
+      "name": "Other company update affects zero rows",
+      "status": "passed"
+    },
+    {
+      "name": "Sale cannot update publication status directly",
+      "status": "passed"
+    },
+    {
+      "name": "Null non-negotiable price is rejected",
+      "status": "passed"
+    },
+    {
+      "name": "Sale submits for review",
+      "status": "passed"
+    },
+    {
+      "name": "Sale cannot approve own listing",
+      "status": "passed"
+    },
+    {
+      "name": "Admin cannot approve listing with no image",
+      "status": "passed"
+    },
+    {
+      "name": "Platform admin publishes approved listing",
+      "status": "passed"
+    },
+    {
+      "name": "Public view contains live listing",
+      "status": "passed"
+    },
+    {
+      "name": "Live content cannot change without re-review",
+      "status": "passed"
+    },
+    {
+      "name": "Second published listing exceeds quota",
+      "status": "passed"
+    },
+    {
+      "name": "Anonymous API can record consented contact",
+      "status": "passed"
+    },
+    {
+      "name": "Other company cannot read contact",
+      "status": "passed"
+    },
+    {
+      "name": "Assigned Sale can read contact",
+      "status": "passed"
+    },
+    {
+      "name": "Auth credentials inaccessible to API role",
+      "status": "passed"
+    },
+    {
+      "name": "Public access disappears immediately when combo is suspended",
+      "status": "passed"
+    },
+    {
+      "name": "Blocked Sale immediately loses public listing visibility",
+      "status": "passed"
+    },
+    {
+      "name": "Cross-company composite key mismatch is rejected",
+      "status": "passed"
+    },
+    {
+      "name": "Payment reference is unique and prevents duplicate records",
+      "status": "passed"
+    },
+    {
+      "name": "Revoking seat hides listings and releases capacity",
+      "status": "passed"
+    },
+    {
+      "name": "All base tables have RLS enabled",
+      "status": "passed"
+    },
+    {
+      "name": "Request actor context is cleared after transaction",
+      "status": "passed"
+    },
+    {
+      "name": "API cannot grant platform admin role to itself",
+      "status": "passed"
+    },
+    {
+      "name": "Company admin cannot edit combo limit",
+      "status": "passed"
+    },
+    {
+      "name": "Admin increases quota then invitation reserves seat",
+      "status": "passed"
+    },
+    {
+      "name": "Invitation activates user once via auth role",
+      "status": "passed"
+    },
+    {
+      "name": "API role cannot invoke auth activation function",
+      "status": "passed"
+    },
+    {
+      "name": "Public projections do not contain contact PII or credential hashes",
+      "status": "passed"
+    }
+  ],
+  "limits": [
+    "Not a multi-connection PostgreSQL server; concurrent quota races still require integration testing on native PostgreSQL.",
+    "No HTTP/UI application has been built in this deliverable."
+  ]
+}

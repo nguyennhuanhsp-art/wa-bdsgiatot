@@ -1,0 +1,46 @@
+name: Verify protected demo
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  docker-demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Linux deployment image
+        run: docker build -t bdsgiatot-demo:ci .
+      - name: Verify demo protection and API startup
+        shell: bash
+        run: |
+          set -euo pipefail
+          DEMO_PASSWORD=$(openssl rand -hex 32)
+          echo "::add-mask::$DEMO_PASSWORD"
+          docker run -d --name demo -p 127.0.0.1:8080:3000 \
+            -e APP_ORIGIN=https://demo.example.test \
+            -e DEMO_ACCESS_USER=ci-viewer \
+            -e DEMO_ACCESS_PASSWORD="$DEMO_PASSWORD" bdsgiatot-demo:ci
+          ready=0
+          for i in $(seq 1 90); do
+            status=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8080/ || true)
+            if [ "$status" = "401" ]; then ready=1; break; fi
+            sleep 1
+          done
+          test "$ready" = "1"
+          for route in / /quan-tri /api/v1/me /images/home-1.webp; do
+            test "$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:8080$route")" = "401"
+          done
+          curl -fsS -u "ci-viewer:$DEMO_PASSWORD" http://127.0.0.1:8080/ -o /dev/null
+          curl -fsS -u "ci-viewer:$DEMO_PASSWORD" http://127.0.0.1:8080/api/v1/health | python3 -c 'import json,sys; assert json.load(sys.stdin)["ok"]'
+          test "$(curl -s -o /dev/null -w '%{http_code}' -u "ci-viewer:$DEMO_PASSWORD" \
+            -H 'Origin: https://demo.example.test' -H 'Content-Type: application/json' \
+            -d '{}' http://127.0.0.1:8080/api/v1/contact)" = "400"
+      - name: Runtime logs on failure
+        if: failure()
+        run: docker logs demo || true
+      - name: Stop test container
+        if: always()
+        run: docker rm -f demo || true
